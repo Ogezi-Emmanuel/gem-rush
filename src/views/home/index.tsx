@@ -11,42 +11,40 @@ export const HomeView: FC = () => {
   return (
     <div className="flex min-h-screen flex-col bg-black text-white">
       {/* HEADER – fake Scrolly feed tabs */}
-      <header className="flex items-center justify-center border-b border-white/10 py-2 sm:py-3">
-        <div className="flex items-center gap-2 rounded-full bg-white/5 px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-[11px]">
-          <button className="rounded-full bg-slate-900 px-3.5 sm:px-4 py-1.5 text-xs sm:text-sm font-semibold text-white">
+      <header className="flex items-center justify-center border-b border-white/10 py-3">
+        <div className="flex items-center gap-2 rounded-full bg-white/5 px-2 py-1 text-[11px]">
+          <button className="rounded-full bg-slate-900 px-3 py-1 font-semibold text-white">
             Feed
           </button>
-          <button className="rounded-full px-3.5 sm:px-4 py-1.5 text-xs sm:text-sm text-slate-400">
+          <button className="rounded-full px-3 py-1 text-slate-400">
             Casino
           </button>
-          <button className="rounded-full px-3.5 sm:px-4 py-1.5 text-xs sm:text-sm text-slate-400">
+          <button className="rounded-full px-3 py-1 text-slate-400">
             Kids
           </button>
         </div>
       </header>
 
       {/* MAIN – central game area (phone frame) */}
-      <main className="flex flex-1 items-center justify-center px-2 sm:px-4 py-2 sm:py-3">
-        <div
-          className="relative aspect-[9/16] w-full max-w-[92vw] sm:max-w-sm md:max-w-md overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 shadow-[0_0_40px_rgba(56,189,248,0.35)]"
-          style={{ touchAction: 'manipulation' }}
-        >
-          <div className="flex items-center justify-between px-2 sm:px-3 py-1.5 sm:py-2 text-[10px] sm:text-xs text-slate-400">
-            <span className="rounded-full bg-white/5 px-2 sm:px-2.5 py-0.5 sm:py-1 text-[9px] sm:text-[10px] uppercase tracking-wide">
+      <main className="flex flex-1 items-center justify-center px-4 py-3">
+        <div className="relative aspect-[9/16] w-full max-w-sm overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 shadow-[0_0_40px_rgba(56,189,248,0.35)]">
+          {/* Fake “feed card” top bar inside the phone */}
+          <div className="flex items-center justify-between px-3 py-2 text-[10px] text-slate-400">
+            <span className="rounded-full bg-white/5 px-2 py-1 text-[9px] uppercase tracking-wide">
               Scrolly Game
             </span>
-            <span className="text-[9px] sm:text-[10px] opacity-70">#NoCodeJam</span>
+            <span className="text-[9px] opacity-70">#NoCodeJam</span>
           </div>
 
           {/* The game lives INSIDE this phone frame */}
-          <div className="flex h-[calc(100%-26px)] sm:h-[calc(100%-30px)] flex-col items-center justify-start px-2 sm:px-3 pb-2 sm:pb-3 pt-1">
+          <div className="flex h-[calc(100%-26px)] flex-col items-center justify-start px-3 pb-3 pt-1">
             <GameSandbox />
           </div>
         </div>
       </main>
 
       {/* FOOTER – tiny version text */}
-      <footer className="flex h-6 sm:h-7 items-center justify-center border-t border-white/10 px-2 text-[9px] sm:text-[10px] text-slate-500">
+      <footer className="flex h-5 items-center justify-center border-t border-white/10 px-2 text-[9px] text-slate-500">
         <span>Scrolly · v{pkg.version}</span>
       </footer>
     </div>
@@ -327,8 +325,17 @@ const GameSandbox: FC = () => {
 
   // --- Render ---
   return (
-    <div className="flex justify-center items-center w-full py-4">
-      <div ref={containerRef} className="relative h-[70vh] sm:h-[75vh] md:h-[80vh] lg:h-[85vh] aspect-[9/16] w-auto max-w-full bg-slate-900 rounded-3xl border-2 border-slate-800 shadow-2xl overflow-hidden select-none ring-1 ring-white/10 ring-offset-2 ring-offset-black" style={{ touchAction: 'manipulation', transform: shakeFrames > 0 ? `translate(${(Math.random()-0.5)*6}px, ${(Math.random()-0.5)*6}px)` : undefined }}>
+    <div className="flex justify-center items-center w-full py-4 px-2 sm:px-4" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
+      <div
+        ref={containerRef}
+        className="relative w-[95vw] sm:w-auto h-[70vh] sm:h-[75vh] md:h-[80vh] lg:h-[85vh] aspect-[9/16] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl bg-slate-900 rounded-3xl border-2 border-slate-800 shadow-2xl overflow-hidden select-none ring-1 ring-white/10 ring-offset-2 ring-offset-black"
+        style={{
+          transform: shakeFrames > 0 ? `translate(${(Math.random() - 0.5) * 6}px, ${(Math.random() - 0.5) * 6}px)` : undefined,
+          touchAction: 'manipulation',
+          WebkitTapHighlightColor: 'transparent',
+          paddingBottom: 'env(safe-area-inset-bottom)'
+        }}
+      >
         
         {/* Background Effects */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-800 via-slate-900 to-black opacity-80" />
@@ -350,7 +357,7 @@ const GameSandbox: FC = () => {
             {feverModeState && <div className="text-pink-400 text-sm font-black uppercase">Fever!</div>}
             {stateRef.current.shieldActive && <div className="text-sky-300 text-sm">🛡️</div>}
           </div>
-          <div className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 px-4 py-2 rounded-2xl border border-slate-700/60 text-right shadow-lg ring-1 ring-white/5 w-48">
+          <div className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 px-4 py-2 rounded-2xl border border-slate-700/60 text-right shadow-lg ring-1 ring-white/5 w-36 sm:w-44 md:w-48">
             <p className="text-[10px] text-slate-400 uppercase tracking-widest">Score</p>
             <p className="text-2xl font-mono text-green-400 font-black">{score}</p>
             {/* Combo bar */}
@@ -367,8 +374,7 @@ const GameSandbox: FC = () => {
           {items.map(item => (
             <div
               key={item.id}
-              onMouseDown={(e) => { e.stopPropagation(); handleTap(item.id, item.type, item.emoji, item.power); }}
-              onTouchStart={(e) => { e.stopPropagation(); handleTap(item.id, item.type, item.emoji, item.power); }}
+              onPointerDown={(e) => { e.stopPropagation(); handleTap(item.id, item.type, item.emoji, item.power); }}
               className="absolute transform -translate-x-1/2 cursor-pointer hover:brightness-125 active:scale-95 transition-filter"
               style={{
                 left: `${item.x}%`,
@@ -390,12 +396,12 @@ const GameSandbox: FC = () => {
         {/* Start Screen */}
         {gameState === 'START' && (
           <div className="absolute inset-0 z-40 bg-gradient-to-b from-black/80 via-black/70 to-black/80 backdrop-blur-sm flex flex-col items-center justify-center p-6 md:p-8 text-center">
-            <div className="text-7xl md:text-8xl mb-4 animate-bounce">💎</div>
-            <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 mb-2">GEM RUSH</h1>
+            <div className="text-[clamp(3rem,10vh,6rem)] mb-4 animate-bounce">💎</div>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 mb-2">GEM RUSH</h1>
             <p className="text-slate-400 mb-8 text-sm">Tap the gems.<br/>Don&apos;t touch the bombs!</p>
             <button 
               onClick={startGame}
-              className="w-3/4 max-w-xs sm:max-w-sm md:max-w-md px-12 py-5 md:px-14 md:py-6 text-xl md:text-2xl bg-gradient-to-br from-fuchsia-500 via-purple-500 to-pink-500 text-white font-extrabold rounded-full shadow-xl shadow-pink-500/40 hover:shadow-2xl active:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none focus-visible:ring-4 focus-visible:ring-pink-300/60 ring-offset-2 ring-offset-black"
+              className="w-11/12 sm:w-3/4 max-w-xs sm:max-w-sm md:max-w-md px-10 sm:px-12 md:px-14 py-4 sm:py-5 md:py-6 text-lg sm:text-xl md:text-2xl bg-gradient-to-br from-fuchsia-500 via-purple-500 to-pink-500 text-white font-extrabold rounded-full shadow-xl shadow-pink-500/40 hover:shadow-2xl active:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none focus-visible:ring-4 focus-visible:ring-pink-300/60 ring-offset-2 ring-offset-black"
             >
               START GAME
             </button>
@@ -406,14 +412,14 @@ const GameSandbox: FC = () => {
         {gameState === 'GAMEOVER' && (
           <div className="absolute inset-0 z-50 bg-red-900/90 backdrop-blur-md flex flex-col items-center justify-center p-6 md:p-8 text-center">
             <div className="text-6xl mb-2">💥</div>
-            <h2 className="text-3xl font-black text-white uppercase italic mb-6">Wasted</h2>
+            <h2 className="text-2xl sm:text-3xl font-black text-white uppercase italic mb-6">Wasted</h2>
             <div className="bg-black/30 p-4 rounded-xl w-full mb-8 border border-white/10">
               <p className="text-slate-300 text-xs uppercase tracking-widest mb-1">Final Score</p>
               <p className="text-5xl font-mono text-white font-bold">{score}</p>
             </div>
             <button 
               onClick={startGame}
-              className="w-3/4 max-w-xs sm:max-w-sm md:max-w-md px-12 py-5 md:px-14 md:py-6 text-xl md:text-2xl bg-gradient-to-br from-red-500 via-orange-500 to-rose-500 text-white font-extrabold rounded-full shadow-xl shadow-red-500/40 hover:shadow-2xl active:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-300/60 ring-offset-2 ring-offset-black"
+              className="w-11/12 sm:w-3/4 max-w-xs sm:max-w-sm md:max-w-md px-10 sm:px-12 md:px-14 py-4 sm:py-5 md:py-6 text-lg sm:text-xl md:text-2xl bg-gradient-to-br from-red-500 via-orange-500 to-rose-500 text-white font-extrabold rounded-full shadow-xl shadow-red-500/40 hover:shadow-2xl active:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-300/60 ring-offset-2 ring-offset-black"
             >
               TRY AGAIN
             </button>
